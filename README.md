@@ -1,156 +1,148 @@
+# Fullstack Template
 
+A starter repository for a fullstack web application with separate `client/` and `server/` workspaces.
 
-Recommended set up of a project
-```
+## Repository structure
+
+```text
 fullstack-template/
 ├── .github/
 │   └── workflows/
 │       ├── client.yml
 │       ├── server.yml
 │       └── docker.yml
-│
 ├── .husky/
 │   └── pre-commit
-│
 ├── .prettierrc
 ├── .prettierignore
 ├── pnpm-workspace.yaml
-│
+├── docker-compose.yml
 ├── client/
-├── server/
-└── docker-compose.yml
+└── server/
 ```
 
-Root:
-`pnpm init` - Create `pnpm-lock.yaml`
-`pnpm install`
-`pnpm exec husky init`
+## Overview
 
-Code quality check (install at root):
-Lint, Husky, Prettier:
-`pnpm add -Dw prettier prettier-plugin-tailwindcss husky lint-staged`
-`-D` stands for development dependency (only needed in development)
-`-w` flags tell pnpm to install them in the workspace root
+- `client/`: Next.js frontend
+- `server/`: Express backend
+- `docker-compose.yml`: local development containers
+- `pnpm-workspace.yaml`: workspace package management
 
-Client:
-Install pnpm: `npm install -g pnpm`
+## Prerequisites
 
-Create Next.js app: `pnpm create next-app@latest .` (remember `.` so it does not create another folder for the project inside client folder)
-Click yes for all suggested set up
+- Node.js 18+
+- `pnpm` installed globally
+- Docker Desktop for containerized development (optional)
 
-Run `pnpm approve-builds` to pick which dependencies should be allowed to run scripts.
+> Use `pnpm` for dependency management in this repository. Avoid `npm` and `yarn` unless explicitly required.
 
-Installation:
+## Getting started
 
-- prettier: `pnpm add -D prettier prettier-plugin-tailwindcss`
-- axips: `pnpm add axios`
-- tanstack/ react-query: `pnpm add @tanstack/react-query`
-- React hook form: `pnpm add react-hook-form` (pending)
-- Zod: `pnpm add zod` (pending)
-- Hookform Resolver: `pnpm add @hookform/resolvers` (pending)
-- Manage dark mode/ light mode: `pnpm add next-themes` (pending, for now set all to light mode)
-- Lucide React: `pnpm add lucide-react`
-- clsx with Tailwind (enable TailwindSS + condition): `pnpm add clsx tailwind-merge`
-- Toast notification: `pnpm add sonner`
-- Initialize ShadCN (UI Components): `pnpm dlx shadcn@latest init`
-
-
-## Getting Started
-
-First, run the development server:
+From the repository root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If root scripts are not available, run the workspace commands separately:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-
-
-
-use `pnmp` to install, NOT using `npm` or `yarn`
-
-Create new branch:
-- For feature: `feature/<feature_name>
-- For bug fix: `bugfix/<bugfix_feature>
-- For refactor: `refactor`
-
-client and server are set up with separate config file (for example: not having the same typescript set up for both client and server)
-
-
-.env to client and server, and copy the environment key from example.env file in each of client and server to .env
-The key's value can be found at: [Github Gist]
-
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Code Quality Check
-Before making commit:
-- Run `pnpm lint` to fix lint. 
-- Run `pnpm lint-staged`
-- Run `pnpm prettier --write .` to format the project
-or `pnpm prettier --write client` to format only the client
-
-Commit is not approved if lint and prettier check is not passed.
-
-
-# Server:
+```bash
+cd client
+pnpm install
+pnpm dev
 ```
+
+```bash
 cd server
-pnpm init
-
-pnpm add express cors cookie-parser dotenv
-
-pnpm add -D typescript
-pnpm add -D @types/node @types/express
-pnpm add -D eslint
-pnpm add -D tsx // watch files for change, watch Typescript closely (better than Nodemon)
+pnpm install
+pnpm dev
 ```
 
-morgan logs every incoming HTTP request, which is extremely useful during development and debugging.
+## Frontend
 
-Development dependencies
-```
-pnpm add -D typescript tsx
-pnpm add -D @types/node
-pnpm add -D @types/express
-pnpm add -D @types/cors
-pnpm add -D @types/morgan
-pnpm add -D @types/cookie-parser
-```
-The `@types` packages provide type definitions (useful for file written in JavaScript in a TypeScript project).
+Open the frontend in your browser at:
 
-Initalize Typescript
-```
-npx tsc --init
+```text
+http://localhost:3000
 ```
 
-# Checklist
-Template (current set-up in this repo):
-- [x] Root:
-- [x] Client:
-- [x] Server:
-- [] Testing: Unit test + Vitest
-- [] Github Actions: install, lint, format, build
-- [] Docker: DockerFiles, `docker-compose.yml`
+Edit `client/app/page.tsx` to begin customizing the UI.
 
-Backend features:
-- [] Third-party authentication (e.g., Clerk or Auth0)
-- [] REST APIs
-- [] Validation
-- [] Database
+## Backend
 
-Production:
-- [] Deployment workflows
-- [] Monitoring and logging
-- [] Environment-specific Docker Compose overrides (optional)
+The server runs with its own configuration and environment variables. Confirm the configured port in `server/src/server.ts` or `server/src/app.ts`.
+
+## Environment variables
+
+Create local `.env` files for each workspace if needed:
+
+- `client/.env`
+- `server/.env`
+
+Copy values from the corresponding `example.env` file, if available.
+
+## Branch naming
+
+Use consistent branch prefixes:
+
+- `feature/<feature-name>`
+- `bugfix/<bugfix-name>`
+- `refactor/<refactor-name>`
+
+## Code quality
+
+Before committing changes:
+
+```bash
+pnpm lint
+pnpm lint-staged
+pnpm prettier --write .
+```
+
+Or format only the client workspace:
+
+```bash
+pnpm prettier --write client
+```
+
+## Server setup notes
+
+The backend includes common TypeScript and Express dependencies such as:
+
+- `express`
+- `cors`
+- `cookie-parser`
+- `dotenv`
+- `morgan`
+- `typescript`
+- `tsx`
+- `eslint`
+- `@types/node`
+- `@types/express`
+- `@types/cors`
+- `@types/morgan`
+- `@types/cookie-parser`
+
+## Docker
+
+Run the app with Docker Compose:
+
+```bash
+docker compose down
+docker compose up --build
+```
+
+Inspect status and logs:
+
+```bash
+docker ps
+docker compose logs --tail 10
+```
+
+**Open browser when Docker compose is up:**
+Using http://localhost:3001/, `PORT=3001`
+
+In docker-compose.yml, we set PORTS in client is `3001:3000` which means `HOST_PORT:CONTAINER_PORT`, or when you visit `localhost:3001` in your browser on your port, Docker forward that traffic to port 3000 inside the container where Next.js is listening.
+
+You can only acccess http://localhost:3001/ if Docker compose is down because `localhost:3000` is now not in a separed container anymore but on your local machine.
